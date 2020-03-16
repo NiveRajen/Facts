@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DB66DE42420068A00CA0FC0 /* FactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */; };
+		4DB66DE624200CD700CA0FC0 /* FactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE524200CD700CA0FC0 /* FactsView.swift */; };
 		E78E9633241CBDE600E5E396 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78E9632241CBDE600E5E396 /* AppDelegate.swift */; };
 		E78E963C241CBDE700E5E396 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E78E963B241CBDE700E5E396 /* Assets.xcassets */; };
 		E78E963F241CBDE700E5E396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E78E963D241CBDE700E5E396 /* LaunchScreen.storyboard */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewModel.swift; sourceTree = "<group>"; };
+		4DB66DE524200CD700CA0FC0 /* FactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsView.swift; sourceTree = "<group>"; };
 		E78E962F241CBDE600E5E396 /* Assessment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assessment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E78E9632241CBDE600E5E396 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E78E963B241CBDE700E5E396 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -132,6 +136,8 @@
 				E78E9663241CC07F00E5E396 /* FactsViewController.swift */,
 				E78E9667241CC26600E5E396 /* FactsAPICalls.swift */,
 				E78E966D241CCE4200E5E396 /* FaactsModel.swift */,
+				4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */,
+				4DB66DE524200CD700CA0FC0 /* FactsView.swift */,
 			);
 			path = Facts;
 			sourceTree = "<group>";
@@ -268,7 +274,9 @@
 			files = (
 				E78E9668241CC26600E5E396 /* FactsAPICalls.swift in Sources */,
 				E78E9664241CC07F00E5E396 /* FactsViewController.swift in Sources */,
+				4DB66DE42420068A00CA0FC0 /* FactsViewModel.swift in Sources */,
 				E78E966E241CCE4200E5E396 /* FaactsModel.swift in Sources */,
+				4DB66DE624200CD700CA0FC0 /* FactsView.swift in Sources */,
 				E78E9633241CBDE600E5E396 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

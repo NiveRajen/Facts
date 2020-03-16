@@ -15,13 +15,15 @@ class FactsAPICalls: NSObject {
     func getFacts(completionHandler: @escaping (_ respose: Archives?, _ error: String?) -> ())  {
         let url = URL(string: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json")
         let request = URLRequest(url: url!)
-        //TODO:- Check Reachability
         URLSession.shared.dataTask(with:request, completionHandler: { data, response, error in
-            if error != nil {
+            guard error == nil else {
                 completionHandler(nil, error?.localizedDescription)
+                return
             }
-            if data == nil {
+            
+            guard data != nil else {
                 completionHandler(nil, "No Records")
+                return
             }
             
             do {
@@ -30,10 +32,12 @@ class FactsAPICalls: NSObject {
                     let jsonData = str.data(using: .utf8)!
                     if let archiveData = try! JSONDecoder().decode(Archives.self, from: jsonData) as? Archives {
                         completionHandler(archiveData, nil)
+                        return
                     }
                 }
             } catch let error {
                 completionHandler(nil, error.localizedDescription)
+                return
             }
 
             

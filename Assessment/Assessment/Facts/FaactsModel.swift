@@ -9,12 +9,17 @@
 import Foundation
 
 public struct Archives: Codable {
-    var title: String
-    var rows: Facts
+    let title: String
+    let rows: [Rows]
+    
+    enum CodingKeys : String, CodingKey {
+        case title = "name"
+        case rows = "Rows"
+    }
 }
 
-public struct Facts: Codable {
-    var title: String
-    var description: String
-    var imageHref: String
+public struct Rows: Codable {
+    let title: String?
+    let description: String?
+    let imageHref: String?
 }

@@ -17,8 +17,19 @@ class FactsViewController: UIViewController {
     }
     
     func downloadContent() {
-        FactsAPICalls.sharedInstance.getFacts()
+        FactsAPICalls.sharedInstance.getFacts { (archives, error) in
+            if error != nil {
+                self.presentError(errorMessage: error!)
+            } else {
+                
+            }
+        }
     }
 
-
+    func presentError(errorMessage: String) {
+        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
 }

@@ -12,28 +12,28 @@ class FactsAPICalls: NSObject {
     static let sharedInstance = FactsAPICalls()
     
     
-     func getFacts()  {
+    func getFacts(completionHandler: @escaping (_ respose: Archives?, _ error: String?) -> ())  {
         let url = URL(string: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json")
         let request = URLRequest(url: url!)
+        //TODO:- Check Reachability
         URLSession.shared.dataTask(with:request, completionHandler: { data, response, error in
-            guard let data = data, error == nil else {
-                print("Error")
-                return
+            if error != nil {
+                completionHandler(nil, error?.localizedDescription)
+            }
+            if data == nil {
+                completionHandler(nil, "No Records")
             }
             
             do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: AnyObject?] {
-                    print(json)
+                let str = String(decoding: data!, as: UTF8.self)
+                if !str.isEmpty {
+                    let jsonData = str.data(using: .utf8)!
+                    if let archiveData = try! JSONDecoder().decode(Archives.self, from: jsonData) as? Archives {
+                        completionHandler(archiveData, nil)
+                    }
                 }
-                
-//                guard let archives = try? JSONDecoder().decode(Archives.self, from: data) else {
-//                    print("Error: Couldn't decode data into car")
-//                    return
-//                }
-                return
             } catch let error {
-                print("Error: \(error.localizedDescription)")
-                return
+                completionHandler(nil, error.localizedDescription)
             }
 
             

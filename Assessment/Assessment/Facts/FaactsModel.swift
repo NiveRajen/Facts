@@ -12,10 +12,10 @@ public struct Archives: Codable {
     let title: String
     let rows: [Rows]
     
-    enum CodingKeys : String, CodingKey {
-        case title = "name"
-        case rows = "Rows"
-    }
+//    enum CodingKeys : String, CodingKey {
+//        case title = "name"
+//        case rows = "Rows"
+//    }
 }
 
 public struct Rows: Codable {

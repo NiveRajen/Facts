@@ -12,13 +12,16 @@ class FactsViewController: UIViewController {
     
     var archiveRecords : Archives? = nil
     
+    var tableView : UITableView? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        initializeView()
         
         setupTheme()
         
         downloadContent()
-        // Do any additional setup after loading the view.
     }
     
     func downloadContent() {
@@ -36,12 +39,13 @@ class FactsViewController: UIViewController {
     
 }
 
-//extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return archiveRecords?.rows.count ?? 0
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        <#code#>
-//    }
-//}
+extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return archiveRecords?.rows.count ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let factsCell = tableView.dequeueReusableCell(withIdentifier: "Facts") as? FactsTableViewCell
+        return factsCell!
+    }
+}

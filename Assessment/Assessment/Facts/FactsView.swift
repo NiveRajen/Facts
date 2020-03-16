@@ -11,6 +11,25 @@ import UIKit
 
 extension FactsViewController {
     
+    func initializeView() {
+        addTableView()
+    }
+    
+    func addTableView() {
+        tableView = UITableView(frame: view.frame)
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        tableView?.register(FactsTableViewCell.self, forCellReuseIdentifier: "Facts")
+        
+        view.addSubview(tableView!)
+        
+        tableView?.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        tableView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        tableView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        tableView?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+
+    }
+    
     func setupTheme() {
         view.backgroundColor = .white
     }

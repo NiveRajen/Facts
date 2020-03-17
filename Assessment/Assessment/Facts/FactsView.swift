@@ -23,7 +23,7 @@ extension FactsViewController {
         
         view.addSubview(tableView!)
         
-        tableView?.rowHeight = 50
+        tableView?.rowHeight = 100
         
         tableView?.translatesAutoresizingMaskIntoConstraints = false
         tableView?.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true

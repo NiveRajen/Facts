@@ -11,8 +11,8 @@ import UIKit
 class FactsViewController: UIViewController {
     
     var archiveRecords : Archives? = nil
-    
     var tableView : UITableView? = nil
+    let imageCache = NSCache<NSString, UIImage>()//url,image
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +35,28 @@ class FactsViewController: UIViewController {
             }
         }
     }
-
     
+    func getImage(url: String, completion: @escaping (_ image: UIImage?, _ error: String? ) -> Void) {
+        if !url.isEmpty {
+            if let cachedImage = imageCache.object(forKey: url as NSString) {
+                completion(cachedImage, nil)
+            } else {
+                FactsAPICalls.sharedInstance.downloadImage(for: url) { data, error in
+                    if let error = error {
+                        completion(nil, error)
+                        
+                    } else if let data = data, let image = UIImage(data: data) {
+                        self.imageCache.setObject(image, forKey: url as NSString)
+                        completion(image, nil)
+                    } else {
+                        completion(nil, "Error")
+                    }
+                }
+            }
+        } else {
+            completion(nil, "Error")
+        }
+    }
 }
 
 extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -46,6 +66,25 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let factsCell = tableView.dequeueReusableCell(withIdentifier: "Facts") as? FactsTableViewCell
+        if let factsObject = archiveRecords?.rows[indexPath.row] {
+            factsCell?.titleLabel.text = factsObject.title
+            factsCell?.descriptionLabel.text = factsObject.description
+            factsCell?.factsImageView.image = UIImage(named: "placeholder")
+            
+            DispatchQueue.global().async { [weak self] in
+                self?.getImage(url: factsObject.imageHref ?? "") { (image, error) in
+                    if image != nil {
+                        DispatchQueue.main.async {
+                            factsCell?.factsImageView.image = image
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            factsCell?.factsImageView.image = UIImage(named: "placeholder")
+                        }
+                    }
+                }
+            }
+        }
         return factsCell!
     }
 }

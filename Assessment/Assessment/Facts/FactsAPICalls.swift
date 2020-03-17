@@ -43,4 +43,22 @@ class FactsAPICalls: NSObject {
             
         }).resume()
     }
+    
+    func downloadImage(for url: String, completionHandler: @escaping (_ respose: Data?, _ error: String?) -> ()) {
+        let request = URLRequest(url: URL(string: url)!)
+        URLSession.shared.dataTask(with:request, completionHandler: { data, response, error in
+            guard error == nil else {
+                completionHandler(nil, error?.localizedDescription)
+                return
+            }
+            
+            guard data != nil else {
+                completionHandler(nil, "No Data")
+                return
+            }
+            
+            completionHandler(data, nil)
+            
+        }).resume()
+    }
 }

@@ -9,7 +9,11 @@
 import UIKit
 
 class FactsTableViewCell: UITableViewCell {
-
+    
+    var titleLabel = UILabel()
+    var descriptionLabel = UILabel()
+    var factsImageView = UIImageView()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,6 +27,9 @@ class FactsTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        selectionStyle = .none
+        
         addViews()
     }
     required init?(coder aDecoder: NSCoder) {

@@ -11,18 +11,21 @@ import UIKit
 
 extension FactsTableViewCell {
     func addViews() {
-        imageView?.image = UIImage(named: "defaultAvatar")
+        factsImageView = UIImageView(image: UIImage(named: "placeholder"))
+        factsImageView.contentMode = .scaleAspectFit
+        addSubview(factsImageView)
         
-        let titleLabel = UILabel()
+        titleLabel = UILabel()
         titleLabel.text = "Title"
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.backgroundColor = .red
         
-        let descriptionLabel = UILabel()
+        descriptionLabel = UILabel()
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.text = "Description"
-        descriptionLabel.font = UIFont(name: titleLabel.font.fontName, size: 15)
+        descriptionLabel.font = UIFont(name: descriptionLabel.font.fontName, size: 15)
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.backgroundColor = .yellow
         
@@ -37,10 +40,14 @@ extension FactsTableViewCell {
         
         addSubview(stack)
         
+        factsImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5).isActive = true
+        factsImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        factsImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
         stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5).isActive = true
         stack.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
         stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
-        stack.leadingAnchor.constraint(equalTo: imageView!.trailingAnchor, constant: 5).isActive = true
+        stack.leadingAnchor.constraint(equalTo: factsImageView.trailingAnchor, constant: 5).isActive = true
         
         descriptionLabel.trailingAnchor.constraint(equalTo: stack.trailingAnchor, constant: -5).isActive = true
         descriptionLabel.bottomAnchor.constraint(equalTo: stack.bottomAnchor, constant: -5).isActive = true

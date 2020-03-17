@@ -19,5 +19,9 @@ extension FactsViewController {
         if (archiveRecords?.rows.count)! == 0 {
             addEmptyMessageScreen()
         }
+        
+        DispatchQueue.main.async {
+            self.tableView?.reloadData()
+        }
     }
 }

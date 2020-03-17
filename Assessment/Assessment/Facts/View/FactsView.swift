@@ -27,6 +27,7 @@ extension FactsViewController {
         tableView?.showsVerticalScrollIndicator = false
         tableView?.separatorStyle = .none
         tableView?.backgroundColor = .clear
+        tableView?.accessibilityValue = "Facts"
         
         view.addSubview(tableView!)
         
@@ -49,6 +50,7 @@ extension FactsViewController {
         emptyMessage.translatesAutoresizingMaskIntoConstraints = false
         emptyMessage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         emptyMessage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        emptyMessage.accessibilityValue = "No Records"
         emptyMessage.isHidden = true
     }
     
@@ -71,6 +73,7 @@ extension FactsViewController {
         view.addSubview(hiLabel)
         hiLabel.text = NSLocalizedString("LABEL_HELLO", comment: "Label for Hello")
         hiLabel.textAlignment = .center
+        hiLabel.accessibilityValue = "Hi"
         hiLabel.font = UIFont.boldSystemFont(ofSize: 25)
         hiLabel.translatesAutoresizingMaskIntoConstraints = false
         hiLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -87,6 +90,7 @@ extension FactsViewController {
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         activityIndicator.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
                                                   constant: -65).isActive = true
+        activityIndicator.accessibilityValue = "Loading"
         activityIndicator.startAnimating()
         view.bringSubviewToFront(activityIndicator)
     }

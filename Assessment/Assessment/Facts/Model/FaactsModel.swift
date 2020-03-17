@@ -9,7 +9,7 @@
 import Foundation
 
 public struct Archives: Codable {
-    let title: String
+    let title: String?
     let rows: [Rows]
 }
 

@@ -15,12 +15,14 @@ extension FactsTableViewCell {
         titleLabel = UILabel()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.accessibilityValue = "Title"
         
         descriptionLabel = UILabel()
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.font = UIFont(name: descriptionLabel.font.fontName, size: 17)
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionLabel.accessibilityValue = "Description"
         
         let stack = UIStackView()
         stack.axis = .vertical
@@ -40,6 +42,7 @@ extension FactsTableViewCell {
         factsImageView.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
         factsImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         factsImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        factsImageView.accessibilityValue = "Image"
 
         
         stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5).isActive = true

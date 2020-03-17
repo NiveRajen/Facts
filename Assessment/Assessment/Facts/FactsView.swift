@@ -20,6 +20,7 @@ extension FactsViewController {
         tableView?.delegate = self
         tableView?.dataSource = self
         tableView?.register(FactsTableViewCell.self, forCellReuseIdentifier: "Facts")
+        tableView?.showsVerticalScrollIndicator = false
         
         view.addSubview(tableView!)
         

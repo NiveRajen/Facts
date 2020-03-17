@@ -66,25 +66,33 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let factsCell = tableView.dequeueReusableCell(withIdentifier: "Facts") as? FactsTableViewCell
+        factsCell?.factsImageView.image = UIImage(named: "placeholder")
+        
         if let factsObject = archiveRecords?.rows[indexPath.row] {
             factsCell?.titleLabel.text = factsObject.title
             factsCell?.descriptionLabel.text = factsObject.description
-            factsCell?.factsImageView.image = UIImage(named: "placeholder")
-            
-            DispatchQueue.global().async { [weak self] in
-                self?.getImage(url: factsObject.imageHref ?? "") { (image, error) in
-                    if image != nil {
-                        DispatchQueue.main.async {
-                            factsCell?.factsImageView.image = image
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            factsCell?.factsImageView.image = UIImage(named: "placeholder")
+            if factsObject.imageHref != nil {
+                DispatchQueue.global().async { [weak self] in
+                    self?.getImage(url: factsObject.imageHref ?? "") { (image, error) in
+                        if image != nil {
+                            DispatchQueue.main.async {
+                                factsCell?.factsImageView.image = image
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                factsCell?.factsImageView.image = UIImage(named: "placeholder")
+                            }
                         }
                     }
                 }
+            } else if factsObject.title == nil  && factsObject.description == nil{
+                factsCell?.factsImageView.bottomAnchor.constraint(equalTo: factsCell!.bottomAnchor).isActive = true
             }
         }
         return factsCell!
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }

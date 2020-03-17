@@ -19,7 +19,6 @@ extension FactsTableViewCell {
         titleLabel.text = "Title"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.backgroundColor = .red
         
         descriptionLabel = UILabel()
         descriptionLabel.numberOfLines = 0
@@ -27,7 +26,6 @@ extension FactsTableViewCell {
         descriptionLabel.text = "Description"
         descriptionLabel.font = UIFont(name: descriptionLabel.font.fontName, size: 15)
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.backgroundColor = .yellow
         
         let stack = UIStackView()
         stack.axis = .vertical

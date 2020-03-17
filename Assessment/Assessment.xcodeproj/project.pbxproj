@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4D5D530B24208A0100F711EF /* FactsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5D530A24208A0100F711EF /* FactsCellView.swift */; };
+		4D5D531D2421297300F711EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D5D531F2421297300F711EF /* Localizable.strings */; };
 		4DB66DE42420068A00CA0FC0 /* FactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */; };
 		4DB66DE624200CD700CA0FC0 /* FactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE524200CD700CA0FC0 /* FactsView.swift */; };
 		4DB66DE92420112000CA0FC0 /* FactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE82420112000CA0FC0 /* FactsTableViewCell.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		4D5D530A24208A0100F711EF /* FactsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsCellView.swift; sourceTree = "<group>"; };
+		4D5D531E2421297300F711EF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewModel.swift; sourceTree = "<group>"; };
 		4DB66DE524200CD700CA0FC0 /* FactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsView.swift; sourceTree = "<group>"; };
 		4DB66DE82420112000CA0FC0 /* FactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsTableViewCell.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 		E78E9626241CBDE600E5E396 = {
 			isa = PBXGroup;
 			children = (
+				4D5D531F2421297300F711EF /* Localizable.strings */,
 				E78E9631241CBDE600E5E396 /* Assessment */,
 				E78E9648241CBDE800E5E396 /* AssessmentTests */,
 				E78E9653241CBDE800E5E396 /* AssessmentUITests */,
@@ -294,6 +297,7 @@
 			files = (
 				E78E963F241CBDE700E5E396 /* LaunchScreen.storyboard in Resources */,
 				E78E963C241CBDE700E5E396 /* Assets.xcassets in Resources */,
+				4D5D531D2421297300F711EF /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +365,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4D5D531F2421297300F711EF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D5D531E2421297300F711EF /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		E78E963D241CBDE700E5E396 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

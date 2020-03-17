@@ -31,7 +31,7 @@ class FactsViewController: UIViewController {
             } else if archives != nil {
                 self.bindData(archive: archives!)
             } else {
-                self.presentError(errorMessage: "No Data")
+                self.presentError(errorMessage: NSLocalizedString("MESSAGE_NO_DATA", comment: "Message for No Data"))
             }
         }
     }
@@ -51,13 +51,13 @@ class FactsViewController: UIViewController {
                         completion(image, nil)
                     } else {
                         self.imageCache.setObject(UIImage(named: "placeholder")!, forKey: url as NSString)
-                        completion(nil, "Error")
+                        completion(nil, NSLocalizedString("TITLE_ERROR", comment: "Error Title"))
                     }
                 }
             }
         } else {
             self.imageCache.setObject(UIImage(named: "placeholder")!, forKey: url as NSString)
-            completion(nil, "Error")
+            completion(nil, NSLocalizedString("TITLE_ERROR", comment: "Error Title"))
         }
     }
 }

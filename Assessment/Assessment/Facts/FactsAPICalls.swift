@@ -22,7 +22,7 @@ class FactsAPICalls: NSObject {
             }
             
             guard data != nil else {
-                completionHandler(nil, "No Records")
+                completionHandler(nil, NSLocalizedString("MESSAGE_NO_RECORDS", comment: "Message for No Records"))
                 return
             }
             
@@ -53,7 +53,7 @@ class FactsAPICalls: NSObject {
             }
             
             guard data != nil else {
-                completionHandler(nil, "No Data")
+                completionHandler(nil, NSLocalizedString("MESSAGE_NO_RECORDS", comment: "Message for No Records"))
                 return
             }
             

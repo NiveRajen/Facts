@@ -1,0 +1,12 @@
+/* 
+  File.strings
+  Assessment
+
+  Created by All on 17/03/20.
+  Copyright © 2020 Nivedha. All rights reserved.
+*/
+
+"MESSAGE_NO_RECORDS" = "No Records Found";
+"MESSAGE_NO_DATA" = "No Data";
+"TITLE_ERROR" = "Error";
+"ALERT_OK" = "OK";

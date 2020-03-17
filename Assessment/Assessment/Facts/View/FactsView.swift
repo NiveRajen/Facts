@@ -39,7 +39,7 @@ extension FactsViewController {
     
     func addEmptyMessage() {
         emptyMessage = UILabel(frame: CGRect.init(x: 0, y: 0, width: 200, height: 30))
-        emptyMessage.text = "No Records Found"
+        emptyMessage.text = NSLocalizedString("MESSAGE_NO_RECORDS", comment: "Message for Empty Rows")
         view.addSubview(emptyMessage)
         emptyMessage.translatesAutoresizingMaskIntoConstraints = false
         emptyMessage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -48,8 +48,8 @@ extension FactsViewController {
     }
     
     func presentError(errorMessage: String) {
-        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        let alert = UIAlertController(title: NSLocalizedString("TITLE_ERROR", comment: "Title for Error"), message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ALERT_OK", comment: "Alert for OK Message"), style: .cancel, handler: nil))
         
         DispatchQueue.main.async { [weak self] in
             self?.present(alert, animated: true)

@@ -13,17 +13,17 @@ class FactsViewController: UIViewController {
     var archiveRecords : Archives? = nil
     var tableView : UITableView? = nil
     let imageCache = NSCache<NSString, UIImage>()//url,image
+    var emptyMessage = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initializeView()
         
-        setupTheme()
-        
         downloadContent()
     }
     
+    //Download Datas
     func downloadContent() {
         FactsAPICalls.sharedInstance.getFacts { (archives, error) in
             if error != nil {
@@ -36,6 +36,7 @@ class FactsViewController: UIViewController {
         }
     }
     
+    //Download Image
     func getImage(url: String, completion: @escaping (_ image: UIImage?, _ error: String? ) -> Void) {
         if !url.isEmpty {
             if let cachedImage = imageCache.object(forKey: url as NSString) {
@@ -61,8 +62,10 @@ class FactsViewController: UIViewController {
     }
 }
 
+//MARK:- TableView Methods
 extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        showHideEmptyMessage()
         return archiveRecords?.rows.count ?? 0
     }
 

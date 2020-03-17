@@ -12,6 +12,8 @@ import UIKit
 extension FactsViewController {
     
     func initializeView() {
+        view.backgroundColor = .white
+        
         addTableView()
     }
     
@@ -31,11 +33,18 @@ extension FactsViewController {
         tableView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         tableView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         tableView?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-
+        
+        addEmptyMessage()
     }
     
-    func setupTheme() {
-        view.backgroundColor = .white
+    func addEmptyMessage() {
+        emptyMessage = UILabel(frame: CGRect.init(x: 0, y: 0, width: 200, height: 30))
+        emptyMessage.text = "No Records Found"
+        view.addSubview(emptyMessage)
+        emptyMessage.translatesAutoresizingMaskIntoConstraints = false
+        emptyMessage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        emptyMessage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        emptyMessage.isHidden = true
     }
     
     func presentError(errorMessage: String) {
@@ -45,9 +54,5 @@ extension FactsViewController {
         DispatchQueue.main.async { [weak self] in
             self?.present(alert, animated: true)
         }
-    }
-    
-    func addEmptyMessageScreen() {
-        
     }
 }

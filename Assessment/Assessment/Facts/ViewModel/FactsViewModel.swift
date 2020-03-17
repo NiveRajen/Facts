@@ -18,12 +18,27 @@ extension FactsViewController {
             }
         }
         
-        if (archiveRecords?.rows.count)! == 0 {
-            addEmptyMessageScreen()
-        }
+        showHideEmptyMessage()
         
         DispatchQueue.main.async {
             self.tableView?.reloadData()
+        }
+    }
+    
+    func showHideEmptyMessage() {
+        DispatchQueue.main.async { [weak self] in
+            if let _ = self?.archiveRecords?.rows {
+                if (self?.archiveRecords?.rows.count)! == 0 {
+                    self?.emptyMessage.isHidden = false
+                    self?.tableView?.separatorStyle = .none
+                } else {
+                    self?.emptyMessage.isHidden = true
+                    self?.tableView?.separatorStyle = .singleLine
+                }
+            } else {
+                self?.emptyMessage.isHidden = false
+                self?.tableView?.separatorStyle = .none
+            }
         }
     }
 }

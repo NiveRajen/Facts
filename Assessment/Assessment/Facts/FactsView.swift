@@ -41,8 +41,9 @@ extension FactsViewController {
     func presentError(errorMessage: String) {
         let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        DispatchQueue.main.async {
-            self.present(alert, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true)
         }
     }
     

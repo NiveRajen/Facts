@@ -49,11 +49,13 @@ class FactsViewController: UIViewController {
                         self.imageCache.setObject(image, forKey: url as NSString)
                         completion(image, nil)
                     } else {
+                        self.imageCache.setObject(UIImage(named: "placeholder")!, forKey: url as NSString)
                         completion(nil, "Error")
                     }
                 }
             }
         } else {
+            self.imageCache.setObject(UIImage(named: "placeholder")!, forKey: url as NSString)
             completion(nil, "Error")
         }
     }
@@ -74,7 +76,8 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
             if let cachedImage = imageCache.object(forKey: (factsObject.imageHref as? NSString) ?? "") {
                 DispatchQueue.main.async {
                     factsCell?.factsImageView.image = cachedImage
-                    factsCell?.factsImageView.contentMode = .scaleToFill
+                    
+                    (cachedImage == UIImage(named: "placeholder")) ? (factsCell?.factsImageView.contentMode = .center) : (factsCell?.factsImageView.contentMode = .scaleToFill)
                 }
                 return factsCell!
             } else {

@@ -66,27 +66,35 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let factsCell = tableView.dequeueReusableCell(withIdentifier: "Facts") as? FactsTableViewCell
-        factsCell?.factsImageView.image = UIImage(named: "placeholder")
         
         if let factsObject = archiveRecords?.rows[indexPath.row] {
             factsCell?.titleLabel.text = factsObject.title
             factsCell?.descriptionLabel.text = factsObject.description
+            
+            if let cachedImage = imageCache.object(forKey: (factsObject.imageHref as? NSString) ?? "") {
+                DispatchQueue.main.async {
+                    factsCell?.factsImageView.image = cachedImage
+                    factsCell?.factsImageView.contentMode = .scaleToFill
+                }
+                return factsCell!
+            }
+            
             if factsObject.imageHref != nil {
                 DispatchQueue.global().async { [weak self] in
                     self?.getImage(url: factsObject.imageHref ?? "") { (image, error) in
                         if image != nil {
                             DispatchQueue.main.async {
                                 factsCell?.factsImageView.image = image
+                                factsCell?.factsImageView.contentMode = .scaleToFill
                             }
                         } else {
                             DispatchQueue.main.async {
                                 factsCell?.factsImageView.image = UIImage(named: "placeholder")
+                                factsCell?.factsImageView.contentMode = .center
                             }
                         }
                     }
                 }
-            } else if factsObject.title == nil  && factsObject.description == nil{
-                factsCell?.factsImageView.bottomAnchor.constraint(equalTo: factsCell!.bottomAnchor).isActive = true
             }
         }
         return factsCell!

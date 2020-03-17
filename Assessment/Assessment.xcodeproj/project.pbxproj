@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D5D530B24208A0100F711EF /* FactsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5D530A24208A0100F711EF /* FactsCellView.swift */; };
 		4D5D531D2421297300F711EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D5D531F2421297300F711EF /* Localizable.strings */; };
+		4D5D532A24213C0E00F711EF /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5D532924213C0E00F711EF /* Reachability.swift */; };
 		4DB66DE42420068A00CA0FC0 /* FactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */; };
 		4DB66DE624200CD700CA0FC0 /* FactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE524200CD700CA0FC0 /* FactsView.swift */; };
 		4DB66DE92420112000CA0FC0 /* FactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE82420112000CA0FC0 /* FactsTableViewCell.swift */; };
@@ -42,6 +43,7 @@
 /* Begin PBXFileReference section */
 		4D5D530A24208A0100F711EF /* FactsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsCellView.swift; sourceTree = "<group>"; };
 		4D5D531E2421297300F711EF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4D5D532924213C0E00F711EF /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewModel.swift; sourceTree = "<group>"; };
 		4DB66DE524200CD700CA0FC0 /* FactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsView.swift; sourceTree = "<group>"; };
 		4DB66DE82420112000CA0FC0 /* FactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsTableViewCell.swift; sourceTree = "<group>"; };
@@ -118,6 +120,14 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		4D5D532824213C0E00F711EF /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				4D5D532924213C0E00F711EF /* Reachability.swift */,
+			);
+			path = "Third Party";
+			sourceTree = "<group>";
+		};
 		4DB66DE7242010FD00CA0FC0 /* FactsCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +161,7 @@
 		E78E9631241CBDE600E5E396 /* Assessment */ = {
 			isa = PBXGroup;
 			children = (
+				4D5D532824213C0E00F711EF /* Third Party */,
 				E78E9662241CBFC600E5E396 /* Facts */,
 				E78E9632241CBDE600E5E396 /* AppDelegate.swift */,
 				E78E963B241CBDE700E5E396 /* Assets.xcassets */,
@@ -327,6 +338,7 @@
 				4D5D530B24208A0100F711EF /* FactsCellView.swift in Sources */,
 				4DB66DE92420112000CA0FC0 /* FactsTableViewCell.swift in Sources */,
 				4DB66DE42420068A00CA0FC0 /* FactsViewModel.swift in Sources */,
+				4D5D532A24213C0E00F711EF /* Reachability.swift in Sources */,
 				E78E966E241CCE4200E5E396 /* FaactsModel.swift in Sources */,
 				4DB66DE624200CD700CA0FC0 /* FactsView.swift in Sources */,
 				E78E9633241CBDE600E5E396 /* AppDelegate.swift in Sources */,
@@ -539,7 +551,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AssessmentTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -560,7 +572,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AssessmentTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

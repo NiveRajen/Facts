@@ -55,4 +55,8 @@ extension FactsViewController {
             self?.present(alert, animated: true)
         }
     }
+    
+    func networkIsReachable() -> Bool {
+        return reachability?.connection == .wifi || reachability?.connection == .cellular
+    }
 }

@@ -10,3 +10,4 @@
 "MESSAGE_NO_DATA" = "No Data";
 "TITLE_ERROR" = "Error";
 "ALERT_OK" = "OK";
+"ALERT_NO_INTERNET" = "No Internet Connection";

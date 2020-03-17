@@ -14,25 +14,40 @@ class FactsViewController: UIViewController {
     var tableView : UITableView? = nil
     let imageCache = NSCache<NSString, UIImage>()//url,image
     var emptyMessage = UILabel()
+    var reachability : Reachability? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        do {
+            reachability = try Reachability()
+        } catch {
+            print("Unable to start notifier")
+        }
+        
         initializeView()
         
         downloadContent()
+        
     }
     
     //Download Datas
     func downloadContent() {
-        FactsAPICalls.sharedInstance.getFacts { (archives, error) in
-            if error != nil {
-                self.presentError(errorMessage: error!)
-            } else if archives != nil {
-                self.bindData(archive: archives!)
-            } else {
-                self.presentError(errorMessage: NSLocalizedString("MESSAGE_NO_DATA", comment: "Message for No Data"))
+        if networkIsReachable() {
+            FactsAPICalls.sharedInstance.getFacts { (archives, error) in
+                if error != nil {
+                    self.presentError(errorMessage: error!)
+                    self.showHideEmptyMessage()
+                } else if archives != nil {
+                    self.bindData(archive: archives!)
+                } else {
+                    self.presentError(errorMessage: NSLocalizedString("MESSAGE_NO_DATA", comment: "Message for No Data"))
+                    self.showHideEmptyMessage()
+                }
             }
+        } else {
+            presentError(errorMessage: NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message"))
+            showHideEmptyMessage()
         }
     }
     
@@ -42,17 +57,21 @@ class FactsViewController: UIViewController {
             if let cachedImage = imageCache.object(forKey: url as NSString) {
                 completion(cachedImage, nil)
             } else {
-                FactsAPICalls.sharedInstance.downloadImage(for: url) { data, error in
-                    if let error = error {
-                        completion(nil, error)
-                        
-                    } else if let data = data, let image = UIImage(data: data) {
-                        self.imageCache.setObject(image, forKey: url as NSString)
-                        completion(image, nil)
-                    } else {
-                        self.imageCache.setObject(UIImage(named: "placeholder")!, forKey: url as NSString)
-                        completion(nil, NSLocalizedString("TITLE_ERROR", comment: "Error Title"))
+                if networkIsReachable() {
+                    FactsAPICalls.sharedInstance.downloadImage(for: url) { data, error in
+                        if let error = error {
+                            completion(nil, error)
+                            
+                        } else if let data = data, let image = UIImage(data: data) {
+                            self.imageCache.setObject(image, forKey: url as NSString)
+                            completion(image, nil)
+                        } else {
+                            self.imageCache.setObject(UIImage(named: "placeholder")!, forKey: url as NSString)
+                            completion(nil, NSLocalizedString("TITLE_ERROR", comment: "Error Title"))
+                        }
                     }
+                } else {
+                    self.presentError(errorMessage: NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message"))
                 }
             }
         } else {

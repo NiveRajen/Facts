@@ -77,6 +77,11 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
                     factsCell?.factsImageView.contentMode = .scaleToFill
                 }
                 return factsCell!
+            } else {
+                DispatchQueue.main.async {
+                    factsCell?.factsImageView.image = UIImage(named: "placeholder")
+                    factsCell?.factsImageView.contentMode = .center
+                }
             }
             
             if factsObject.imageHref != nil {

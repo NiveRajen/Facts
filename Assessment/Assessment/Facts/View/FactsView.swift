@@ -41,6 +41,7 @@ extension FactsViewController {
         addEmptyMessage()
     }
     
+    //MARK:- Show messages
     func addEmptyMessage() {
         emptyMessage = UILabel(frame: CGRect.init(x: 0, y: 0, width: 200, height: 30))
         emptyMessage.text = NSLocalizedString("MESSAGE_NO_RECORDS", comment: "Message for Empty Rows")
@@ -52,14 +53,19 @@ extension FactsViewController {
     }
     
     func presentError(errorMessage: String) {
-        let alert = UIAlertController(title: NSLocalizedString("TITLE_ERROR", comment: "Title for Error"), message: errorMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("ALERT_OK", comment: "Alert for OK Message"), style: .cancel, handler: nil))
+        let alert = UIAlertController(title: NSLocalizedString("TITLE_ERROR", comment: "Title for Error"),
+                                      message: errorMessage, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ALERT_OK", comment: "Alert for OK Message"),
+                                      style: .cancel,
+                                      handler: nil))
         
         DispatchQueue.main.async { [weak self] in
             self?.present(alert, animated: true)
         }
     }
     
+    //MARK:- Initial Page Loading
     func initialLoad() {
         hiLabel = UILabel()
         view.addSubview(hiLabel)
@@ -79,7 +85,8 @@ extension FactsViewController {
         view.addSubview(activityIndicator)
         activityIndicator.color = .gray
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        activityIndicator.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -65).isActive = true
+        activityIndicator.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                  constant: -65).isActive = true
         activityIndicator.startAnimating()
         view.bringSubviewToFront(activityIndicator)
     }
@@ -91,6 +98,7 @@ extension FactsViewController {
         }
     }
     
+    //MARK:- Network Reachability
     func networkIsReachable() -> Bool {
         return reachability?.connection == .wifi || reachability?.connection == .cellular
     }

@@ -13,8 +13,10 @@ class FactsAPICalls: NSObject {
     
     
     func getFacts(completionHandler: @escaping (_ respose: Archives?, _ error: String?) -> ())  {
+        
         let url = URL(string: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json")
         let request = URLRequest(url: url!)
+        
         URLSession.shared.dataTask(with:request, completionHandler: { data, response, error in
             guard error == nil else {
                 completionHandler(nil, error?.localizedDescription)

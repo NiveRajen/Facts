@@ -33,6 +33,7 @@ class FactsViewController: UIViewController {
         
     }
     
+    //MARK:- API Calls
     //Download Datas
     func downloadContent() {
         if networkIsReachable() {
@@ -41,17 +42,21 @@ class FactsViewController: UIViewController {
                     self.presentError(errorMessage: error!)
                     self.showHideEmptyMessage()
                     self.hideInitialView()
-                } else if archives != nil {
+                }
+                else if archives != nil {
                     self.bindData(archive: archives!)
-                } else {
-                    self.presentError(errorMessage: NSLocalizedString("MESSAGE_NO_DATA", comment: "Message for No Data"))
+                }
+                else {
+                    self.presentError(errorMessage: NSLocalizedString("MESSAGE_NO_DATA",
+                                                                      comment: "Message for No Data"))
                     self.showHideEmptyMessage()
                     self.hideInitialView()
                 }
             }
         } else {
             hideInitialView()
-            presentError(errorMessage: NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message"))
+            presentError(errorMessage: NSLocalizedString("ALERT_NO_INTERNET",
+                                                         comment: "Alert for No Internet Message"))
             showHideEmptyMessage()
         }
     }
@@ -76,7 +81,8 @@ class FactsViewController: UIViewController {
                         }
                     }
                 } else {
-                    self.presentError(errorMessage: NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message"))
+                    self.presentError(errorMessage: NSLocalizedString("ALERT_NO_INTERNET",
+                                                                      comment: "Alert for No Internet Message"))
                 }
             }
         } else {
@@ -96,15 +102,20 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let factsCell = tableView.dequeueReusableCell(withIdentifier: "Facts") as? FactsTableViewCell
         
-        if let factsObject = archiveRecords?.rows[indexPath.row] {
+        if let factsObject = archiveRecords?.rows[indexPath.row]
+        {
             factsCell?.titleLabel.text = factsObject.title
             factsCell?.descriptionLabel.text = factsObject.description
             
             DispatchQueue.global().async { [weak self] in
-                if let cachedImage = self?.imageCache.object(forKey: (factsObject.imageHref as? NSString) ?? "") {
+                if let cachedImage = self?.imageCache.object(forKey: (factsObject.imageHref as? NSString) ?? "")
+                {
                     DispatchQueue.main.async {
                         factsCell?.factsImageView.image = cachedImage
-                        (cachedImage == UIImage(named: "placeholder")) ? (factsCell?.factsImageView.contentMode = .center) : (factsCell?.factsImageView.contentMode = .scaleToFill)
+                        
+                        (cachedImage == UIImage(named: "placeholder")) ?
+                            (factsCell?.factsImageView.contentMode = .center) :
+                            (factsCell?.factsImageView.contentMode = .scaleToFill)
                     }
                     return
                 } else {

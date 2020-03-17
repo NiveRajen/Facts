@@ -37,7 +37,7 @@ extension FactsTableViewCell {
         factsImageView.contentMode = .center
         factsImageView.image = UIImage(named: "placeholder")
         factsImageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        factsImageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        factsImageView.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
         factsImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         factsImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
 

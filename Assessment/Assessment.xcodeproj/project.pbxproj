@@ -84,6 +84,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D5D530C242116A400F711EF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4D5D530D242116BF00F711EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4DB66DE524200CD700CA0FC0 /* FactsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4D5D530E242116F800F711EF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E78E966D241CCE4200E5E396 /* FaactsModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4D5D530F2421171C00F711EF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E78E9663241CC07F00E5E396 /* FactsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		4DB66DE7242010FD00CA0FC0 /* FactsCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,12 +178,12 @@
 		E78E9662241CBFC600E5E396 /* Facts */ = {
 			isa = PBXGroup;
 			children = (
+				4D5D530F2421171C00F711EF /* Controller */,
+				4D5D530E242116F800F711EF /* Model */,
+				4D5D530D242116BF00F711EF /* View */,
+				4D5D530C242116A400F711EF /* ViewModel */,
 				4DB66DE7242010FD00CA0FC0 /* FactsCell */,
-				E78E9663241CC07F00E5E396 /* FactsViewController.swift */,
 				E78E9667241CC26600E5E396 /* FactsAPICalls.swift */,
-				E78E966D241CCE4200E5E396 /* FaactsModel.swift */,
-				4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */,
-				4DB66DE524200CD700CA0FC0 /* FactsView.swift */,
 			);
 			path = Facts;
 			sourceTree = "<group>";

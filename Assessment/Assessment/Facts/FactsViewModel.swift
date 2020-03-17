@@ -13,7 +13,9 @@ extension FactsViewController {
         archiveRecords = archive
         
         if let title = archiveRecords?.title {
-            self.title = title
+            DispatchQueue.main.async {
+                self.navigationController?.navigationBar.topItem?.title = title
+            }
         }
         
         if (archiveRecords?.rows.count)! == 0 {

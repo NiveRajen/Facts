@@ -69,17 +69,17 @@ extension FactsViewController {
     
     //MARK:- Initial Page Loading
     func initialLoad() {
-        hiLabel = UILabel()
-        view.addSubview(hiLabel)
-        hiLabel.text = NSLocalizedString("LABEL_HELLO", comment: "Label for Hello")
-        hiLabel.textAlignment = .center
-        hiLabel.accessibilityValue = "Hi"
-        hiLabel.font = UIFont.boldSystemFont(ofSize: 25)
-        hiLabel.translatesAutoresizingMaskIntoConstraints = false
-        hiLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        hiLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        welcomeLabel = UILabel()
+        view.addSubview(welcomeLabel)
+        welcomeLabel.text = NSLocalizedString("LABEL_HELLO", comment: "Label for Hello")
+        welcomeLabel.textAlignment = .center
+        welcomeLabel.accessibilityValue = "Hi"
+        welcomeLabel.font = UIFont.boldSystemFont(ofSize: 25)
+        welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
+        welcomeLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        view.bringSubviewToFront(hiLabel)
+        view.bringSubviewToFront(welcomeLabel)
         
         activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +97,7 @@ extension FactsViewController {
     
     func hideInitialView() {
         DispatchQueue.main.async { [weak self] in
-            self?.hiLabel.isHidden = true
+            self?.welcomeLabel.isHidden = true
             self?.activityIndicator.stopAnimating()
         }
     }

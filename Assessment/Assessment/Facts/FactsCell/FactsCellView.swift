@@ -24,17 +24,17 @@ extension FactsTableViewCell {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.accessibilityValue = "Description"
         
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.contentMode = .scaleAspectFill
-        stack.addArrangedSubview(factsImageView)
-        stack.addArrangedSubview(titleLabel)
-        stack.addArrangedSubview(descriptionLabel)
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.spacing = 5
-        stack.clipsToBounds = false
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.contentMode = .scaleAspectFill
+        stackView.addArrangedSubview(factsImageView)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(descriptionLabel)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 5
+        stackView.clipsToBounds = false
         
-        addSubview(stack)
+        addSubview(stackView)
         
         factsImageView.contentMode = .center
         factsImageView.image = UIImage(named: "placeholder")
@@ -45,13 +45,13 @@ extension FactsTableViewCell {
         factsImageView.accessibilityValue = "Image"
 
         
-        stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5).isActive = true
-        stack.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
-        stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
-        stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5).isActive = true
+        stackView.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
         
-        descriptionLabel.trailingAnchor.constraint(equalTo: stack.trailingAnchor, constant: -5).isActive = true
-        descriptionLabel.bottomAnchor.constraint(equalTo: stack.bottomAnchor, constant: -5).isActive = true
+        descriptionLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -5).isActive = true
+        descriptionLabel.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -5).isActive = true
 
     }
     

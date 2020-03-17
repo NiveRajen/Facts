@@ -15,7 +15,7 @@ class FactsViewController: UIViewController {
     let imageCache = NSCache<NSString, UIImage>()//url,image
     var emptyMessage = UILabel()
     var reachability : Reachability? = nil
-    var hiLabel = UILabel()
+    var welcomeLabel = UILabel()
     var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
@@ -102,14 +102,12 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let factsCell = tableView.dequeueReusableCell(withIdentifier: "Facts") as? FactsTableViewCell
         
-        if let factsObject = archiveRecords?.rows[indexPath.row]
-        {
+        if let factsObject = archiveRecords?.rows[indexPath.row] {
             factsCell?.titleLabel.text = factsObject.title
             factsCell?.descriptionLabel.text = factsObject.description
             
             DispatchQueue.global().async { [weak self] in
-                if let cachedImage = self?.imageCache.object(forKey: (factsObject.imageHref as? NSString) ?? "")
-                {
+                if let cachedImage = self?.imageCache.object(forKey: (factsObject.imageHref as? NSString) ?? "") {
                     DispatchQueue.main.async {
                         factsCell?.factsImageView.image = cachedImage
                         

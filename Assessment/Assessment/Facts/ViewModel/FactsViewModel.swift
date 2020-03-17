@@ -21,6 +21,7 @@ extension FactsViewController {
         showHideEmptyMessage()
         
         DispatchQueue.main.async {
+            self.hideInitialView()
             self.tableView?.reloadData()
         }
     }
@@ -35,9 +36,6 @@ extension FactsViewController {
                     self?.emptyMessage.isHidden = true
                     self?.tableView?.separatorStyle = .singleLine
                 }
-            } else {
-                self?.emptyMessage.isHidden = false
-                self?.tableView?.separatorStyle = .none
             }
         }
     }

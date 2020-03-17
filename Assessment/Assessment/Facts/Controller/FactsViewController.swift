@@ -15,6 +15,8 @@ class FactsViewController: UIViewController {
     let imageCache = NSCache<NSString, UIImage>()//url,image
     var emptyMessage = UILabel()
     var reachability : Reachability? = nil
+    var hiLabel = UILabel()
+    var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,14 +40,17 @@ class FactsViewController: UIViewController {
                 if error != nil {
                     self.presentError(errorMessage: error!)
                     self.showHideEmptyMessage()
+                    self.hideInitialView()
                 } else if archives != nil {
                     self.bindData(archive: archives!)
                 } else {
                     self.presentError(errorMessage: NSLocalizedString("MESSAGE_NO_DATA", comment: "Message for No Data"))
                     self.showHideEmptyMessage()
+                    self.hideInitialView()
                 }
             }
         } else {
+            hideInitialView()
             presentError(errorMessage: NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message"))
             showHideEmptyMessage()
         }
@@ -95,22 +100,21 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
             factsCell?.titleLabel.text = factsObject.title
             factsCell?.descriptionLabel.text = factsObject.description
             
-            if let cachedImage = imageCache.object(forKey: (factsObject.imageHref as? NSString) ?? "") {
-                DispatchQueue.main.async {
-                    factsCell?.factsImageView.image = cachedImage
-                    
-                    (cachedImage == UIImage(named: "placeholder")) ? (factsCell?.factsImageView.contentMode = .center) : (factsCell?.factsImageView.contentMode = .scaleToFill)
+            DispatchQueue.global().async { [weak self] in
+                if let cachedImage = self?.imageCache.object(forKey: (factsObject.imageHref as? NSString) ?? "") {
+                    DispatchQueue.main.async {
+                        factsCell?.factsImageView.image = cachedImage
+                        (cachedImage == UIImage(named: "placeholder")) ? (factsCell?.factsImageView.contentMode = .center) : (factsCell?.factsImageView.contentMode = .scaleToFill)
+                    }
+                    return
+                } else {
+                    DispatchQueue.main.async {
+                        factsCell?.factsImageView.image = UIImage(named: "placeholder")
+                        factsCell?.factsImageView.contentMode = .center
+                    }
                 }
-                return factsCell!
-            } else {
-                DispatchQueue.main.async {
-                    factsCell?.factsImageView.image = UIImage(named: "placeholder")
-                    factsCell?.factsImageView.contentMode = .center
-                }
-            }
-            
-            if factsObject.imageHref != nil {
-                DispatchQueue.global().async { [weak self] in
+                
+                if factsObject.imageHref != nil {
                     self?.getImage(url: factsObject.imageHref ?? "") { (image, error) in
                         if image != nil {
                             DispatchQueue.main.async {

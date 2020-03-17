@@ -14,6 +14,8 @@ extension FactsViewController {
     func initializeView() {
         view.backgroundColor = .white
         
+        initialLoad()
+        
         addTableView()
     }
     
@@ -23,6 +25,8 @@ extension FactsViewController {
         tableView?.dataSource = self
         tableView?.register(FactsTableViewCell.self, forCellReuseIdentifier: "Facts")
         tableView?.showsVerticalScrollIndicator = false
+        tableView?.separatorStyle = .none
+        tableView?.backgroundColor = .clear
         
         view.addSubview(tableView!)
         
@@ -53,6 +57,37 @@ extension FactsViewController {
         
         DispatchQueue.main.async { [weak self] in
             self?.present(alert, animated: true)
+        }
+    }
+    
+    func initialLoad() {
+        hiLabel = UILabel()
+        view.addSubview(hiLabel)
+        hiLabel.text = NSLocalizedString("LABEL_HELLO", comment: "Label for Hello")
+        hiLabel.textAlignment = .center
+        hiLabel.font = UIFont.boldSystemFont(ofSize: 25)
+        hiLabel.translatesAutoresizingMaskIntoConstraints = false
+        hiLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        hiLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        view.bringSubviewToFront(hiLabel)
+        
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        activityIndicator.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        view.addSubview(activityIndicator)
+        activityIndicator.color = .gray
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicator.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -65).isActive = true
+        activityIndicator.startAnimating()
+        view.bringSubviewToFront(activityIndicator)
+    }
+    
+    func hideInitialView() {
+        DispatchQueue.main.async { [weak self] in
+            self?.hiLabel.isHidden = true
+            self?.activityIndicator.stopAnimating()
         }
     }
     

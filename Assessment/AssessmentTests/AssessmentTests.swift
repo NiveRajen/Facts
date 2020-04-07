@@ -40,15 +40,14 @@ class AssessmentTests: XCTestCase {
         XCTAssertNotNil(fact)
     }
     
+  //Unit test for API Calls
     func testAPICall() {
-        // given
         let url =
             URL(string: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json")
         let promise = expectation(description: "Completion handler invoked")
         var statusCode: Int?
         var responseError: Error?
         
-        // when
         let dataTask = urlSession.dataTask(with: url!) { data, response, error in
             statusCode = (response as? HTTPURLResponse)?.statusCode
             responseError = error
@@ -57,9 +56,63 @@ class AssessmentTests: XCTestCase {
         dataTask.resume()
         wait(for: [promise], timeout: 5)
         
-        // then
         XCTAssertNil(responseError)
         XCTAssertEqual(statusCode, 200)
     }
+  
+     //Check if the image is not nil
+     func testNilImage() {
+       let archiveIndia = Archives.init(title: "About India", rows: [Rows.init(title: "Beavers", description: "Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony", imageHref: "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/American_Beaver.jpg/220px-American_Beaver.jpg")])
+       XCTAssertTrue(archiveIndia.rows[0].imageHref != nil)
+     }
+     
+     //Check if the image is found in location
+  
+  //Test whether number of rows in fact is greater than 0
+  func testFacts() {
+    let viewModel = Archives.init(title: "About India", rows: [])
 
+    XCTAssertTrue(viewModel.rows.count > 0)
+  }
+  
+  //Unit test to check whether the image is in specified location
+  func testImageInPath() {
+      let url =
+          URL(string: "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/American_Beaver.jpg/220px-American_Beaver.jpg")
+      let promise = expectation(description: "Completion handler invoked")
+      var responseData: Data?
+          
+      let dataTask = urlSession.dataTask(with: url!) { data, response, error in
+          responseData = data
+          promise.fulfill()
+      }
+      dataTask.resume()
+      wait(for: [promise], timeout: 5)
+      
+      XCTAssertNotNil(responseData)
+  }
+  
+  //Unit test for checking whether the Json encodes in the Model i.e valid json
+  func testJsonEncoding() {
+    let url =
+        URL(string: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json")
+    let promise = expectation(description: "Completion handler invoked")
+    var responseData: Data?
+        
+    let dataTask = urlSession.dataTask(with: url!) { data, response, error in
+        responseData = data
+        promise.fulfill()
+    }
+    dataTask.resume()
+    wait(for: [promise], timeout: 5)
+    
+    XCTAssertNotNil(responseData)
+    
+    let str = String(decoding: responseData!, as: UTF8.self)
+    XCTAssertNotNil(str)
+    let jsonData = str.data(using: .utf8)!
+    XCTAssertNoThrow(try! JSONDecoder().decode(Archives.self, from: jsonData) as? Archives)
+    
+  }
+  
 }

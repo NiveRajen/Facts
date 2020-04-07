@@ -101,9 +101,4 @@ extension FactsViewController {
             self?.activityIndicator.stopAnimating()
         }
     }
-    
-    //MARK:- Network Reachability
-    func networkIsReachable() -> Bool {
-        return reachability?.connection == .wifi || reachability?.connection == .cellular
-    }
 }

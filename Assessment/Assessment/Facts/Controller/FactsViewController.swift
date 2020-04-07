@@ -21,12 +21,6 @@ class FactsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        do {
-            reachability = try Reachability()
-        } catch {
-            print("Unable to start notifier")
-        }
-        
         initializeView()
         
         downloadContent()
@@ -123,6 +117,7 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
                 
+              DispatchQueue.main.async {
                 if factsObject.imageHref != nil {
                     self?.getImage(url: factsObject.imageHref ?? "") { (image, error) in
                         if image != nil {
@@ -138,6 +133,7 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 }
+              }
             }
         }
         return factsCell!

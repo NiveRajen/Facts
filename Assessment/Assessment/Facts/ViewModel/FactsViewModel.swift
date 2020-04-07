@@ -39,4 +39,24 @@ extension FactsViewController {
             }
         }
     }
+  
+   //MARK:- Network Reachability
+     func networkIsReachable() -> Bool {
+       if reachability == nil {
+           do {
+                reachability = try Reachability()
+            
+                NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged), name: .reachabilityChanged, object: reachability)
+                  
+              } catch {
+                  print("Unable to start notifier")
+              }
+         }
+         return reachability?.connection == .wifi || reachability?.connection == .cellular
+     }
+    
+  @objc func networkStatusChanged() {
+    //Network Status changed
+    print("Success")
+  }
 }

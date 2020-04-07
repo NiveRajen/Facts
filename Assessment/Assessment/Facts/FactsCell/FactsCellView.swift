@@ -45,10 +45,10 @@ extension FactsTableViewCell {
         factsImageView.accessibilityValue = "Image"
 
         
-        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5).isActive = true
-        stackView.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
+        stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
         
         descriptionLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -5).isActive = true
         descriptionLabel.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -5).isActive = true

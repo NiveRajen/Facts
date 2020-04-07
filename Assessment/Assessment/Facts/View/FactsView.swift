@@ -38,8 +38,18 @@ extension FactsViewController {
         tableView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         tableView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         tableView?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        
+      
+        addRefreshControl()
         addEmptyMessage()
+    }
+  
+    func addRefreshControl() {
+        tableView?.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+    }
+  
+    func endRefreshing() {
+      tableView?.refreshControl?.endRefreshing()
     }
     
     //MARK:- Show messages

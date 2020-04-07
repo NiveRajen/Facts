@@ -40,6 +40,14 @@ extension FactsViewController {
         }
     }
   
+  @objc func refreshData() {
+    if archiveRecords == nil {
+      downloadContent()
+    } else {
+      endRefreshing()
+    }
+  }
+  
    //MARK:- Network Reachability
      func networkIsReachable() -> Bool {
        if reachability == nil {
@@ -57,6 +65,5 @@ extension FactsViewController {
     
   @objc func networkStatusChanged() {
     //Network Status changed
-    print("Success")
   }
 }

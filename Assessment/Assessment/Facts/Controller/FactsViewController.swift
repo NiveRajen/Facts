@@ -17,7 +17,8 @@ class FactsViewController: UIViewController {
     var reachability : Reachability? = nil
     var welcomeLabel = UILabel()
     var activityIndicator = UIActivityIndicatorView()
-    
+    let refreshControl = UIRefreshControl()
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,6 +54,7 @@ class FactsViewController: UIViewController {
                                                          comment: "Alert for No Internet Message"))
             showHideEmptyMessage()
         }
+      endRefreshing()
     }
     
     //Download Image

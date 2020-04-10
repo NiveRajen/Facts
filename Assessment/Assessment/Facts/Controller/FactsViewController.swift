@@ -13,7 +13,6 @@ class FactsViewController: UIViewController {
     var tableView : UITableView? = nil
     var emptyMessage = UILabel()
     var welcomeLabel = UILabel()
-    var activityIndicator = UIActivityIndicatorView()
     let refreshControl = UIRefreshControl()
     var factsModel = FactsViewModel()
     
@@ -25,21 +24,6 @@ class FactsViewController: UIViewController {
     func initializeView() {
         self.view.backgroundColor = .white
         
-        factsModel.response = { [weak self] (error: String?) in
-            DispatchQueue.main.async {
-                if error != nil {
-                    self?.presentError(errorMessage: error!)
-                } else if self?.factsModel.archives != nil {
-                    if let title = self?.factsModel.archives?.title {
-                        self?.navigationController?.navigationBar.topItem?.title = title
-                    }
-                    self?.tableView?.reloadData()
-                }
-                self?.showHideEmptyMessage()
-                self?.hideInitialView()
-                self?.endRefreshing()
-            }
-        }
         self.initialLoad()
     }
     
@@ -57,18 +41,7 @@ class FactsViewController: UIViewController {
         welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.view.bringSubviewToFront(welcomeLabel)
         
-        activityIndicator = UIActivityIndicatorView()
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        activityIndicator.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        self.view.addSubview(activityIndicator)
-        
-        activityIndicator.color = .gray
-        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        activityIndicator.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -65).isActive = true
-        activityIndicator.accessibilityValue = "Loading"
-        activityIndicator.startAnimating()
-        self.view.bringSubviewToFront(activityIndicator)
+        addLoader()
         
         addTableView()
     }
@@ -76,7 +49,7 @@ class FactsViewController: UIViewController {
     func hideInitialView() {
         DispatchQueue.main.async {
             self.welcomeLabel.isHidden = true
-            self.activityIndicator.stopAnimating()
+            self.stopLoader()
         }
     }
     
@@ -103,9 +76,24 @@ class FactsViewController: UIViewController {
         
           addRefreshControl()
           addEmptyMessage()
+        
+          downloadArchives()
           
-          factsModel.downloadContent()
       }
+    
+    func downloadArchives() {
+        factsModel.response = { [weak self] in
+            DispatchQueue.main.async {
+                self?.presentError(errorMessage: self?.factsModel.message)
+                self?.navigationController?.navigationBar.topItem?.title = self?.factsModel.archiveName
+                self?.tableView?.reloadData()
+                self?.showHideEmptyMessage()
+                self?.hideInitialView()
+                self?.endRefreshing()
+            }
+        }
+        factsModel.downloadContent()
+    }
     
       func addRefreshControl() {
           tableView?.refreshControl = refreshControl
@@ -139,7 +127,7 @@ class FactsViewController: UIViewController {
       }
     
     func showHideEmptyMessage() {
-        DispatchQueue.main.async { //[weak self] in
+        DispatchQueue.main.async {
             if let _ = self.factsModel.archives?.rows {
                 self.emptyMessage.isHidden = true
                 self.tableView?.separatorStyle = .singleLine
@@ -150,14 +138,18 @@ class FactsViewController: UIViewController {
         }
     }
       
-      func presentError(errorMessage: String) {
+      func presentError(errorMessage: String?) {
+        if errorMessage != nil {
+        if errorMessage!.count > 0 {
           DispatchQueue.main.async {
               let alert = UIAlertController(title: NSLocalizedString("TITLE_ERROR", comment: "Title for Error"),message: errorMessage, preferredStyle: .alert)
               
               alert.addAction(UIAlertAction(title: NSLocalizedString("ALERT_OK", comment: "Alert for OK Message"),style: .cancel, handler: nil))
               
               self.present(alert, animated: true)
+            }
           }
+        }
       }
 }
 
@@ -179,14 +171,7 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
                 //Check if it already there in cache, else download the image
                 DispatchQueue.main.async {
                     factsCell.imageItem = self?.factsModel.imageCache.object(forKey: (factsObject.imageHref as NSString?) ?? "")
-                        
-                    if factsObject.imageHref != nil {
-                        self?.factsModel.getImage(url: factsObject.imageHref ?? "") { (image, error) in
-                            DispatchQueue.main.async {
-                                factsCell.imageItem = image
-                            }
-                        }
-                    }
+                    factsCell.imageUrl = factsObject.imageHref
                 }
             }
         }

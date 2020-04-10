@@ -35,6 +35,18 @@ class FactsTableViewCell: UITableViewCell {
         }
     }
     
+    var imageUrl: String? {
+        didSet {
+        if imageUrl != nil {
+            FactsViewModel().getImage(url: imageUrl ?? "") { (image, error) in
+                DispatchQueue.main.async {
+                    self.imageItem = image
+                }
+              }
+            }
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

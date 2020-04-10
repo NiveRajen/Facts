@@ -11,9 +11,11 @@ import UIKit
 
 class FactsViewModel {
     
-    var response: ((_ error: String?) -> Void)?
+    var response: (() -> Void)?
     var archives: Archives?
     let imageCache = NSCache<NSString, UIImage>()
+    var archiveName = ""
+    var message: String?
     
     //MARK:- API Calls
     //Download Datas
@@ -21,18 +23,13 @@ class FactsViewModel {
         if Utils.shared.networkIsReachable() {
             FactsAPICalls.sharedInstance.getFacts { (archives, error) in
                 self.archives = archives
-                if error != nil {
-                    self.response?(error!)
-                }
-                else if archives != nil {
-                    self.response?(nil)
-                }
-                else {
-                    self.response?(NSLocalizedString("MESSAGE_NO_DATA", comment: "Message for No Data"))
-                }
+                self.archiveName = archives?.title ?? ""
+                self.message = error
+                self.response?()
             }
         } else {
-            self.response?(NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message"))
+            self.message = NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message")
+            self.response?()
         }
     }
     

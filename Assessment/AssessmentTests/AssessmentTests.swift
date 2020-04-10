@@ -70,7 +70,7 @@ class AssessmentTests: XCTestCase {
   
   //Test whether number of rows in fact is greater than 0
   func testFacts() {
-    let viewModel = Archives.init(title: "About India", rows: [])
+    let viewModel = Archives.init(title: "About India", rows: [Rows.init(title: "Beavers", description: "Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony", imageHref: "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/American_Beaver.jpg/220px-American_Beaver.jpg")])
 
     XCTAssertTrue(viewModel.rows.count > 0)
   }

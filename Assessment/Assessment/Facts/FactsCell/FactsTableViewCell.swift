@@ -14,6 +14,27 @@ class FactsTableViewCell: UITableViewCell {
     var descriptionLabel = UILabel()
     var factsImageView = UIImageView()
     
+    var factItem: Rows? {
+        didSet {
+            titleLabel.text = factItem?.title
+            descriptionLabel.text = factItem?.description
+        }
+    }
+    
+    var imageItem: UIImage? {
+        didSet {
+            if imageItem != nil {
+                factsImageView.image = imageItem
+                
+                (imageItem == UIImage(named: "placeholder")) ? (factsImageView.contentMode = .center) :
+                                                               (factsImageView.contentMode = .scaleToFill)
+            } else {
+                factsImageView.image = UIImage(named: "placeholder")
+                factsImageView.contentMode = .center
+            }
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

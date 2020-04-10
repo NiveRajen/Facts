@@ -7,63 +7,61 @@
 //
 
 import Foundation
+import UIKit
 
-extension FactsViewController {
-    func bindData(archive: Archives) {
-        archiveRecords = archive
-        
-        if let title = archiveRecords?.title {
-            DispatchQueue.main.async {
-                self.navigationController?.navigationBar.topItem?.title = title
-            }
-        }
-        
-        showHideEmptyMessage()
-        
-        DispatchQueue.main.async {
-            self.hideInitialView()
-            self.tableView?.reloadData()
-        }
-    }
+class FactsViewModel {
     
-    func showHideEmptyMessage() {
-        DispatchQueue.main.async { [weak self] in
-            if let _ = self?.archiveRecords?.rows {
-                if (self?.archiveRecords?.rows.count)! == 0 {
-                    self?.emptyMessage.isHidden = false
-                    self?.tableView?.separatorStyle = .none
-                } else {
-                    self?.emptyMessage.isHidden = true
-                    self?.tableView?.separatorStyle = .singleLine
+    var response: ((_ error: String?) -> Void)?
+    var archives: Archives?
+    let imageCache = NSCache<NSString, UIImage>()
+    
+    //MARK:- API Calls
+    //Download Datas
+    func downloadContent() {
+        if Utils.shared.networkIsReachable() {
+            FactsAPICalls.sharedInstance.getFacts { (archives, error) in
+                self.archives = archives
+                if error != nil {
+                    self.response?(error!)
+                }
+                else if archives != nil {
+                    self.response?(nil)
+                }
+                else {
+                    self.response?(NSLocalizedString("MESSAGE_NO_DATA", comment: "Message for No Data"))
                 }
             }
+        } else {
+            self.response?(NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message"))
         }
     }
-  
-  @objc func refreshData() {
-    if archiveRecords == nil {
-      downloadContent()
-    } else {
-      endRefreshing()
-    }
-  }
-  
-   //MARK:- Network Reachability
-     func networkIsReachable() -> Bool {
-       if reachability == nil {
-           do {
-                reachability = try Reachability()
-            
-                NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged), name: .reachabilityChanged, object: reachability)
-                  
-              } catch {
-                  print("Unable to start notifier")
-              }
-         }
-         return reachability?.connection == .wifi || reachability?.connection == .cellular
-     }
     
-  @objc func networkStatusChanged() {
-    //Network Status changed
-  }
+    //Download Image
+    func getImage(url: String, completion: @escaping (_ image: UIImage?, _ error: String? ) -> Void) {
+        if !url.isEmpty {
+            if let cachedImage = imageCache.object(forKey: url as NSString) {
+                completion(cachedImage, nil)
+            } else {
+                if  Utils.shared.networkIsReachable() {
+                    FactsAPICalls.sharedInstance.downloadImage(for: url) { data, error in
+                        if let error = error {
+                            completion(nil, error)
+                            
+                        } else if let data = data, let image = UIImage(data: data) {
+                            self.imageCache.setObject(image, forKey: url as NSString)
+                            completion(image, nil)
+                        } else {
+                            self.imageCache.setObject(UIImage(named: "placeholder")!, forKey: url as NSString)
+                            completion(nil, NSLocalizedString("TITLE_ERROR", comment: "Error Title"))
+                        }
+                    }
+                } else {
+                    completion(nil, NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message"))
+                }
+            }
+        } else {
+            self.imageCache.setObject(UIImage(named: "placeholder")!, forKey: url as NSString)
+            completion(nil, NSLocalizedString("TITLE_ERROR", comment: "Error Title"))
+        }
+    }
 }

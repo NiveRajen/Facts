@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44E4D4402440BB8F006DEDEF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E4D43F2440BB8F006DEDEF /* Utils.swift */; };
 		4D5D530B24208A0100F711EF /* FactsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5D530A24208A0100F711EF /* FactsCellView.swift */; };
 		4D5D531D2421297300F711EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D5D531F2421297300F711EF /* Localizable.strings */; };
 		4D5D532A24213C0E00F711EF /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5D532924213C0E00F711EF /* Reachability.swift */; };
 		4DB66DE42420068A00CA0FC0 /* FactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */; };
-		4DB66DE624200CD700CA0FC0 /* FactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE524200CD700CA0FC0 /* FactsView.swift */; };
 		4DB66DE92420112000CA0FC0 /* FactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB66DE82420112000CA0FC0 /* FactsTableViewCell.swift */; };
 		E7619442243CBBC100401410 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7619441243CBBC100401410 /* SceneDelegate.swift */; };
 		E78E9633241CBDE600E5E396 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78E9632241CBDE600E5E396 /* AppDelegate.swift */; };
@@ -42,11 +42,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		44E4D43F2440BB8F006DEDEF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		4D5D530A24208A0100F711EF /* FactsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsCellView.swift; sourceTree = "<group>"; };
 		4D5D531E2421297300F711EF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4D5D532924213C0E00F711EF /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewModel.swift; sourceTree = "<group>"; };
-		4DB66DE524200CD700CA0FC0 /* FactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsView.swift; sourceTree = "<group>"; };
 		4DB66DE82420112000CA0FC0 /* FactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsTableViewCell.swift; sourceTree = "<group>"; };
 		E7619441243CBBC100401410 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E78E962F241CBDE600E5E396 /* Assessment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assessment.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,20 +90,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44E4D43C24409130006DEDEF /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				44E4D43F2440BB8F006DEDEF /* Utils.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		4D5D530C242116A400F711EF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				4DB66DE32420068A00CA0FC0 /* FactsViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		4D5D530D242116BF00F711EF /* View */ = {
-			isa = PBXGroup;
-			children = (
-				4DB66DE524200CD700CA0FC0 /* FactsView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		4D5D530E242116F800F711EF /* Model */ = {
@@ -195,9 +195,9 @@
 		E78E9662241CBFC600E5E396 /* Facts */ = {
 			isa = PBXGroup;
 			children = (
+				44E4D43C24409130006DEDEF /* Common */,
 				4D5D530F2421171C00F711EF /* Controller */,
 				4D5D530E242116F800F711EF /* Model */,
-				4D5D530D242116BF00F711EF /* View */,
 				4D5D530C242116A400F711EF /* ViewModel */,
 				4DB66DE7242010FD00CA0FC0 /* FactsCell */,
 				E78E9667241CC26600E5E396 /* FactsAPICalls.swift */,
@@ -341,10 +341,10 @@
 				4D5D530B24208A0100F711EF /* FactsCellView.swift in Sources */,
 				4DB66DE92420112000CA0FC0 /* FactsTableViewCell.swift in Sources */,
 				4DB66DE42420068A00CA0FC0 /* FactsViewModel.swift in Sources */,
+				44E4D4402440BB8F006DEDEF /* Utils.swift in Sources */,
 				E7619442243CBBC100401410 /* SceneDelegate.swift in Sources */,
 				4D5D532A24213C0E00F711EF /* Reachability.swift in Sources */,
 				E78E966E241CCE4200E5E396 /* FaactsModel.swift in Sources */,
-				4DB66DE624200CD700CA0FC0 /* FactsView.swift in Sources */,
 				E78E9633241CBDE600E5E396 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,7 +450,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -504,7 +504,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -557,7 +557,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AssessmentTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -578,7 +578,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AssessmentTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

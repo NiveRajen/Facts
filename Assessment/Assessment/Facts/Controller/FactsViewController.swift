@@ -54,77 +54,79 @@ class FactsViewController: UIViewController {
     }
     
     //MARK:- Tableview controls
-      func addTableView() {
-          tableView = UITableView(frame: view.frame)
-          tableView?.delegate = self
-          tableView?.dataSource = self
-          tableView?.register(FactsTableViewCell.self, forCellReuseIdentifier: "Facts")
-          tableView?.showsVerticalScrollIndicator = false
-          tableView?.separatorStyle = .none
-          tableView?.backgroundColor = .clear
-          tableView?.accessibilityValue = "Facts"
-          
-          view.addSubview(tableView!)
-          
-          tableView?.rowHeight = 100
-          
-          tableView?.translatesAutoresizingMaskIntoConstraints = false
-          tableView?.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-          tableView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 3).isActive = true
-          tableView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-          tableView?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+    func addTableView() {
+        tableView = UITableView(frame: view.frame)
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        tableView?.register(FactsTableViewCell.self, forCellReuseIdentifier: "Facts")
+        tableView?.showsVerticalScrollIndicator = false
+        tableView?.separatorStyle = .none
+        tableView?.backgroundColor = .clear
+        tableView?.accessibilityValue = "Facts"
+        tableView?.tableFooterView = UIView()
         
-          addRefreshControl()
-          addEmptyMessage()
+        view.addSubview(tableView!)
         
-          downloadArchives()
-          
-      }
+        tableView?.rowHeight = 100
+        
+        tableView?.translatesAutoresizingMaskIntoConstraints = false
+        tableView?.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        tableView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 3).isActive = true
+        tableView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        tableView?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        
+        addRefreshControl()
+        addEmptyMessage()
+        downloadArchives()
+        
+    }
     
     func downloadArchives() {
-        factsModel.response = { [weak self] in
+        factsModel.response = { [weak self] success,error in
             DispatchQueue.main.async {
-                self?.presentError(errorMessage: self?.factsModel.message)
-                self?.navigationController?.navigationBar.topItem?.title = self?.factsModel.archiveName
-                self?.tableView?.reloadData()
+                self?.perform(#selector(self?.endRefreshing), with: nil, afterDelay: 0.1)
                 self?.showHideEmptyMessage()
                 self?.hideInitialView()
-                self?.endRefreshing()
+                
+                if success {
+                    self?.tableView?.reloadData()
+                    self?.navigationController?.navigationBar.topItem?.title = self?.factsModel.archiveName
+                } else {
+                    self?.presentError(errorMessage: self?.factsModel.message)
+                }
             }
         }
         factsModel.downloadContent()
     }
     
-      func addRefreshControl() {
-          tableView?.refreshControl = refreshControl
-          refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-      }
+    func addRefreshControl() {
+        refreshControl.tintColor = UIColor.red
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refreshData), for: .valueChanged)
+        tableView?.addSubview(refreshControl)
+    }
     
-      func endRefreshing() {
-          DispatchQueue.main.async {
-              self.tableView?.refreshControl?.endRefreshing()
-          }
-      }
-    
-    @objc func refreshData() {
-        if factsModel.archives == nil {
-            factsModel.downloadContent()
-        } else {
-            endRefreshing()
+    @objc func endRefreshing() {
+        DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
         }
     }
-      
+    
+    @objc func refreshData() {
+        factsModel.downloadContent()
+    }
+    
     //MARK:- Show messages
     func addEmptyMessage() {
-          emptyMessage = UILabel(frame: CGRect.init(x: 0, y: 0, width: 200, height: 30))
-          emptyMessage.text = NSLocalizedString("MESSAGE_NO_RECORDS", comment: "Message for Empty Rows")
-          self.view.addSubview(emptyMessage)
-          emptyMessage.translatesAutoresizingMaskIntoConstraints = false
-          emptyMessage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-          emptyMessage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-          emptyMessage.accessibilityValue = "No Records"
-          emptyMessage.isHidden = true
-      }
+        emptyMessage = UILabel(frame: CGRect.init(x: 0, y: 0, width: 200, height: 30))
+        emptyMessage.text = NSLocalizedString("MESSAGE_NO_RECORDS", comment: "Message for Empty Rows")
+        self.view.addSubview(emptyMessage)
+        emptyMessage.translatesAutoresizingMaskIntoConstraints = false
+        emptyMessage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        emptyMessage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        emptyMessage.accessibilityValue = "No Records"
+        emptyMessage.isHidden = true
+    }
     
     func showHideEmptyMessage() {
         DispatchQueue.main.async {
@@ -137,20 +139,14 @@ class FactsViewController: UIViewController {
             }
         }
     }
-      
-      func presentError(errorMessage: String?) {
-        if errorMessage != nil {
-        if errorMessage!.count > 0 {
-          DispatchQueue.main.async {
-              let alert = UIAlertController(title: NSLocalizedString("TITLE_ERROR", comment: "Title for Error"),message: errorMessage, preferredStyle: .alert)
-              
-              alert.addAction(UIAlertAction(title: NSLocalizedString("ALERT_OK", comment: "Alert for OK Message"),style: .cancel, handler: nil))
-              
-              self.present(alert, animated: true)
-            }
-          }
-        }
-      }
+    
+    func presentError(errorMessage: String?) {
+        let alert = UIAlertController(title: NSLocalizedString("TITLE_ERROR", comment: "Title for Error"),message: errorMessage, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ALERT_OK", comment: "Alert for OK Message"),style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
 }
 
 //MARK:- UITableViewDelegate, UITableViewDataSource

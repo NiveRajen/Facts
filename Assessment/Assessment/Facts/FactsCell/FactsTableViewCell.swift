@@ -23,14 +23,16 @@ class FactsTableViewCell: UITableViewCell {
     
     var imageItem: UIImage? {
         didSet {
-            if imageItem != nil {
-                factsImageView.image = imageItem
-                
-                (imageItem == UIImage(named: "placeholder")) ? (factsImageView.contentMode = .center) :
-                                                               (factsImageView.contentMode = .scaleToFill)
-            } else {
-                factsImageView.image = UIImage(named: "placeholder")
-                factsImageView.contentMode = .center
+            if Reachability.isConnectedToNetwork() {
+                if imageItem != nil {
+                    factsImageView.image = imageItem
+                    
+                    (imageItem == UIImage(named: "placeholder")) ? (factsImageView.contentMode = .center) :
+                        (factsImageView.contentMode = .scaleToFill)
+                } else {
+                    factsImageView.image = UIImage(named: "placeholder")
+                    factsImageView.contentMode = .center
+                }
             }
         }
     }

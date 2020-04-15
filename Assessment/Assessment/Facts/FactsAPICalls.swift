@@ -10,7 +10,7 @@ import UIKit
 
 class FactsAPICalls: NSObject {
     static let sharedInstance = FactsAPICalls()
-    
+    let imageCache = NSCache<NSString, UIImage>()
     
     func getFacts(completionHandler: @escaping (_ respose: Archives?, _ error: String?) -> ())  {
         
@@ -46,21 +46,28 @@ class FactsAPICalls: NSObject {
         }).resume()
     }
     
-    func downloadImage(for url: String, completionHandler: @escaping (_ respose: Data?, _ error: String?) -> ()) {
-        let request = URLRequest(url: URL(string: url)!)
-        URLSession.shared.dataTask(with:request, completionHandler: { data, response, error in
-            guard error == nil else {
-                completionHandler(nil, error?.localizedDescription)
-                return
+    func getImage(for url: String, completionHandler: @escaping (_ respose: UIImage?, _ error: String?) -> ()) {
+        if !url.isEmpty {
+            if let cachedImage = imageCache.object(forKey: url as NSString) {
+                completionHandler(cachedImage, nil)
+            } else {
+                if !Reachability.isConnectedToNetwork() {
+                    completionHandler(nil, NSLocalizedString("ALERT_NO_INTERNET", comment: "Alert for No Internet Message"))
+                } else {
+                    let request = URLRequest(url: URL(string: url)!)
+                    URLSession.shared.dataTask(with:request, completionHandler: { data, response, error in
+                        if let data = data, let image = UIImage(data: data) {
+                            self.imageCache.setObject(image, forKey: url as NSString)
+                            completionHandler(image, nil)
+                        } else {
+                            completionHandler(nil, NSLocalizedString("TITLE_ERROR", comment: "Error Title"))
+                        }
+                        
+                    }).resume()
+                }
             }
-            
-            guard data != nil else {
-                completionHandler(nil, NSLocalizedString("MESSAGE_NO_RECORDS", comment: "Message for No Records"))
-                return
-            }
-            
-            completionHandler(data, nil)
-            
-        }).resume()
+        } else {
+            completionHandler(nil, NSLocalizedString("TITLE_ERROR", comment: "Error Title"))
+        }
     }
 }

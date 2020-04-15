@@ -18,33 +18,23 @@ class FactsTableViewCell: UITableViewCell {
         didSet {
             titleLabel.text = factItem?.title
             descriptionLabel.text = factItem?.description
-        }
-    }
-    
-    var imageItem: UIImage? {
-        didSet {
-            if Reachability.isConnectedToNetwork() {
-                if imageItem != nil {
-                    factsImageView.image = imageItem
-                    
-                    (imageItem == UIImage(named: "placeholder")) ? (factsImageView.contentMode = .center) :
-                        (factsImageView.contentMode = .scaleToFill)
-                } else {
-                    factsImageView.image = UIImage(named: "placeholder")
-                    factsImageView.contentMode = .center
-                }
-            }
-        }
-    }
-    
-    var imageUrl: String? {
-        didSet {
-        if imageUrl != nil {
-            FactsViewModel().getImage(url: imageUrl ?? "") { (image, error) in
+            factsImageView.contentMode = .scaleToFill
+            
+            DispatchQueue.global().async { [weak self] in
+                //Check image is already there in cache, else download the image
                 DispatchQueue.main.async {
-                    self.imageItem = image
+                    if self?.factItem?.imageHref != nil {
+                        FactsAPICalls.sharedInstance.getImage(for: (self?.factItem?.imageHref)!) { (image, error) in
+                        DispatchQueue.main.async {
+                            if error == nil {
+                                self?.factsImageView.image = image
+                            } else {
+                                self?.factsImageView.image = UIImage(named: "placeholder")
+                            }
+                        }
+                      }
+                    }
                 }
-              }
             }
         }
     }
@@ -55,6 +45,12 @@ class FactsTableViewCell: UITableViewCell {
         selectionStyle = .none
         
         addViews()
+    }
+    
+    override func prepareForReuse() {
+        factsImageView.image = UIImage(named: "placeholder")
+        titleLabel.text = ""
+        descriptionLabel.text = ""
     }
     
     required init?(coder aDecoder: NSCoder) {

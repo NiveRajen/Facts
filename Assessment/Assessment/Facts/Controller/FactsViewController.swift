@@ -115,14 +115,6 @@ extension FactsViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let factsObject = factsModel.archives?.rows[indexPath.row] {
             factsCell.factItem = factsObject
-            
-            DispatchQueue.global().async { [weak self] in
-                //Check if it already there in cache, else download the image
-                DispatchQueue.main.async {
-                    factsCell.imageItem = self?.factsModel.imageCache.object(forKey: (factsObject.imageHref as NSString?) ?? "")
-                    factsCell.imageUrl = factsObject.imageHref
-                }
-            }
         }
         return factsCell
     }

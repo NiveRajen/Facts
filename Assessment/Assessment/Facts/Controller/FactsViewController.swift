@@ -11,9 +11,6 @@ import UIKit
 class FactsViewController: UIViewController {
     
     var tableView : UITableView? = nil
-    var emptyMessage = UILabel()
-    var welcomeLabel = UILabel()
-    let refreshControl = UIRefreshControl()
     var factsModel = FactsViewModel()
     
     override func viewDidLoad() {
@@ -24,34 +21,11 @@ class FactsViewController: UIViewController {
     func initializeView() {
         self.view.backgroundColor = .white
         
-        self.initialLoad()
-    }
-    
-    
-    //MARK:- Initial Page Loading
-    func initialLoad() {
-        welcomeLabel = UILabel()
-        view.addSubview(welcomeLabel)
-        welcomeLabel.text = NSLocalizedString("LABEL_HELLO", comment: "Label for Hello")
-        welcomeLabel.textAlignment = .center
-        welcomeLabel.accessibilityValue = "Hi"
-        welcomeLabel.font = UIFont.boldSystemFont(ofSize: 25)
-        welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
-        welcomeLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.view.bringSubviewToFront(welcomeLabel)
-        
-        addLoader()
+        initialLoad()
         
         addTableView()
     }
     
-    func hideInitialView() {
-        DispatchQueue.main.async {
-            self.welcomeLabel.isHidden = true
-            self.stopLoader()
-        }
-    }
     
     //MARK:- Tableview controls
     func addTableView() {
@@ -76,6 +50,9 @@ class FactsViewController: UIViewController {
         tableView?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
         addRefreshControl()
+        tableView?.addSubview(UIViewController.refreshControl)
+        UIViewController.refreshControl.addTarget(self, action: #selector(self.refreshData), for: .valueChanged)
+        
         addEmptyMessage()
         downloadArchives()
         
@@ -99,42 +76,18 @@ class FactsViewController: UIViewController {
         factsModel.downloadContent()
     }
     
-    func addRefreshControl() {
-        refreshControl.tintColor = UIColor.red
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(self.refreshData), for: .valueChanged)
-        tableView?.addSubview(refreshControl)
-    }
-    
-    @objc func endRefreshing() {
-        DispatchQueue.main.async {
-            self.refreshControl.endRefreshing()
-        }
-    }
-    
     @objc func refreshData() {
         factsModel.downloadContent()
     }
     
     //MARK:- Show messages
-    func addEmptyMessage() {
-        emptyMessage = UILabel(frame: CGRect.init(x: 0, y: 0, width: 200, height: 30))
-        emptyMessage.text = NSLocalizedString("MESSAGE_NO_RECORDS", comment: "Message for Empty Rows")
-        self.view.addSubview(emptyMessage)
-        emptyMessage.translatesAutoresizingMaskIntoConstraints = false
-        emptyMessage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        emptyMessage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emptyMessage.accessibilityValue = "No Records"
-        emptyMessage.isHidden = true
-    }
-    
     func showHideEmptyMessage() {
         DispatchQueue.main.async {
             if let _ = self.factsModel.archives?.rows {
-                self.emptyMessage.isHidden = true
+                self.hideEmptyMessage()
                 self.tableView?.separatorStyle = .singleLine
             } else {
-                self.emptyMessage.isHidden = false
+                self.showHideEmptyMessage()
                 self.tableView?.separatorStyle = .none
             }
         }
